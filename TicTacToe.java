@@ -1,30 +1,46 @@
+import java.util.Random;
+
 public class TicTacToe {
 
-    static char[][] board = new char[3][3];
+    static boolean isHumanTurn;
+    static char humanSymbol;
+    static char computerSymbol;
 
     public static void main(String[] args) {
-        initializeBoard();
-        printBoard();
+        tossAndAssignSymbols();
+        displayTossResult();
     }
 
-    // Initialize the board with '-'
-    static void initializeBoard() {
-        for (int row = 0; row < 3; row++) {
-            for (int col = 0; col < 3; col++) {
-                board[row][col] = '-';
-            }
+    // Toss logic
+    static void tossAndAssignSymbols() {
+        Random rand = new Random();
+
+        int toss = rand.nextInt(2); // 0 or 1
+
+        if (toss == 0) {
+            // Human starts
+            isHumanTurn = true;
+            humanSymbol = 'X';
+            computerSymbol = 'O';
+        } else {
+            // Computer starts
+            isHumanTurn = false;
+            humanSymbol = 'O';
+            computerSymbol = 'X';
         }
     }
 
-    // Print the board
-    static void printBoard() {
-        System.out.println("Tic-Tac-Toe Board:");
+    // Display result
+    static void displayTossResult() {
+        System.out.println("=== Toss Result ===");
 
-        for (int row = 0; row < 3; row++) {
-            for (int col = 0; col < 3; col++) {
-                System.out.print(board[row][col] + " ");
-            }
-            System.out.println(); // move to next line after each row
+        if (isHumanTurn) {
+            System.out.println("Human plays first!");
+        } else {
+            System.out.println("Computer plays first!");
         }
+
+        System.out.println("Human Symbol: " + humanSymbol);
+        System.out.println("Computer Symbol: " + computerSymbol);
     }
 }
