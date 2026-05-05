@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class TicTacToe {
 
     static char[][] board = {
@@ -7,14 +9,17 @@ public class TicTacToe {
     };
 
     public static void main(String[] args) {
-        int row = 1;
-        int col = 1;
-
-        if (isValidMove(row, col)) {
-            placeMove(row, col, 'X');
-        }
-
+        computerMove();
         printBoard();
+    }
+
+    // UC4 helpers (reuse)
+    static int getRowFromSlot(int slot) {
+        return (slot - 1) / 3;
+    }
+
+    static int getColFromSlot(int slot) {
+        return (slot - 1) % 3;
     }
 
     // UC5 (reuse)
@@ -25,12 +30,30 @@ public class TicTacToe {
         return board[row][col] == '-';
     }
 
-    // UC6: Place move
+    // UC6 (reuse)
     static void placeMove(int row, int col, char symbol) {
         board[row][col] = symbol;
     }
 
-    // Helper to see result
+    // UC7: Computer move
+    static void computerMove() {
+        Random rand = new Random();
+
+        while (true) {
+            int slot = rand.nextInt(9) + 1; // 1–9
+
+            int row = getRowFromSlot(slot);
+            int col = getColFromSlot(slot);
+
+            if (isValidMove(row, col)) {
+                placeMove(row, col, 'O');
+                System.out.println("Computer chose slot: " + slot);
+                break;
+            }
+        }
+    }
+
+    // Display board
     static void printBoard() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
